@@ -38,6 +38,9 @@ const Profile = () => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Profile</DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <DropdownMenuItem onSelect={() => navigate("/orders")}>
+            Orders
+          </DropdownMenuItem>
           <DropdownMenuItem onSelect={handleLogOut}>Log Out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

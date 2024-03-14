@@ -18,3 +18,8 @@ export const CartApiClient = axios.create({
   baseURL: import.meta.env.VITE_CART_SERVICE_BASE_URL,
   headers,
 });
+
+export const OrderApiClient = axios.create({
+  baseURL: import.meta.env.VITE_ORDER_SERVICE_BASE_URL,
+  headers,
+});

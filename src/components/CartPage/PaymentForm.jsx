@@ -11,6 +11,7 @@ import { Input } from "@components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import useOrders from "../../api/hooks/useOrders";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -20,8 +21,8 @@ const formSchema = z.object({
 });
 
 const PaymentForm = ({ coffees, cartItems = [] }) => {
-  console.log(cartItems);
   const navigate = useNavigate();
+  const { createOrder } = useOrders();
 
   const getCoffee = (coffeeId) => {
     return coffees?.find((coffee) => coffee?.id == coffeeId);
@@ -51,9 +52,9 @@ const PaymentForm = ({ coffees, cartItems = [] }) => {
     return (getTotalPrice() * 0.1).toFixed(2);
   };
 
-  function onSubmit(values) {
-    console.log(values);
-    navigate("/order-information");
+  async function onSubmit() {
+    await createOrder();
+    navigate("/orders");
   }
 
   return (
@@ -135,7 +136,7 @@ const PaymentForm = ({ coffees, cartItems = [] }) => {
               </div>
               <div className="flex flex-row justify-between my-3 border-y-2 border-[#E2E4EB] py-3">
                 <p className="font-medium">Subtotal</p>
-                <p>{(getTotalPrice()-getTotalDiscount()).toFixed(2)}</p>
+                <p>{(getTotalPrice() - getTotalDiscount()).toFixed(2)}</p>
               </div>
             </div>
             <Button className="w-full bg-[#0683DE] text-white">Submit</Button>
