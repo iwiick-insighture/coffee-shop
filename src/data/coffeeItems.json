@@ -1,0 +1,61 @@
+{
+    "coffeeItems": [
+      {
+        "id": 1,
+        "name": "Espresso",
+        "description": "A full-flavored, concentrated form of coffee that is served in “shots”.",
+        "price": 18.95,
+        "numberOfItems": 10,
+        "imageUrl": "/coffees/image1.svg"
+      },
+      {
+        "id": 2,
+        "name": "Latte",
+        "description": "Made with espresso and steamed milk, the latte is a classic coffee favorite.",
+        "price": 23.50,
+        "numberOfItems": 8,
+        "imageUrl": "/coffees/image2.svg"
+      },
+      {
+        "id": 3,
+        "name": "Cappuccino",
+        "description": "A coffee drink that is made with espresso, hot milk, and steamed milk foam.",
+        "price": 13.00,
+        "numberOfItems": 5,
+        "imageUrl": "/coffees/image3.svg"
+      },
+      {
+        "id": 4,
+        "name": "Americano",
+        "description": "Espresso with added hot water, giving it a similar strength but different flavor from regular drip coffee.",
+        "price": 22.00,
+        "numberOfItems": 7,
+        "imageUrl": "/coffees/image4.svg"
+      },
+      {
+        "id": 5,
+        "name": "Latte",
+        "description": "Made with espresso and steamed milk, the latte is a classic coffee favorite.",
+        "price": 23.50,
+        "numberOfItems": 8,
+        "imageUrl": "/coffees/image2.svg"
+      },
+      {
+        "id": 6,
+        "name": "Cappuccino",
+        "description": "A coffee drink that is made with espresso, hot milk, and steamed milk foam.",
+        "price": 13.00,
+        "numberOfItems": 5,
+        "imageUrl": "/coffees/image3.svg"
+      },
+      {
+        "id": 7,
+        "name": "Americano",
+        "description": "Espresso with added hot water, giving it a similar strength but different flavor from regular drip coffee.",
+        "price": 22.00,
+        "numberOfItems": 7,
+        "imageUrl": "/coffees/image4.svg"
+      }
+    ]
+  }
+  
