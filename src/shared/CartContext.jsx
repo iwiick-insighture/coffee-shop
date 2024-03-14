@@ -1,43 +1,15 @@
-// src/shared/CartContext.js
-import React from 'react';
+import { createContext } from "react";
+import useCartItems from "../api/hooks/useCartItems";
 
-const CartContext = React.createContext();
-export const useCart = () => React.useContext(CartContext);
+export const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = React.useState([]);
-
-  const addToCart = (newItem) => {
-    setCartItems((prevItems) => {
-      const foundIndex = prevItems.findIndex(item => item.id === newItem.id);
-      if (foundIndex >= 0) {
-        const updatedItems = [...prevItems];
-        updatedItems[foundIndex].quantity += 1;
-        return updatedItems;
-      } else {
-        return [...prevItems, { ...newItem, quantity: 1 }];
-      }
-    });
-  };
-
-  const removeFromCart = (itemId) => {
-    setCartItems((prevItems) => {
-      const foundIndex = prevItems.findIndex(item => item.id === itemId);
-      if (foundIndex >= 0) {
-        const updatedItems = [...prevItems];
-        updatedItems[foundIndex].quantity -= 1;
-        
-        if (updatedItems[foundIndex].quantity <= 0) {
-          return updatedItems.filter(item => item.id !== itemId);
-        }
-        return updatedItems;
-      }
-      return prevItems;
-    });
-  };
+export const CartContextProvider = ({ children }) => {
+  const { cartItems, addToCart, removeFromCart, refreshCart } = useCartItems();
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cartItems, addToCart, removeFromCart, refreshCart }}
+    >
       {children}
     </CartContext.Provider>
   );

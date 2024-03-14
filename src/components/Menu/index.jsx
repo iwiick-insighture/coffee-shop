@@ -7,11 +7,12 @@ import {
   CardTitle,
 } from "@components/ui/card";
 import useCatalouge from "../../api/hooks/useCatalouge";
-import useCartItems from "../../api/hooks/useCartItems";
 import defaultCoffeeImage from "../../../public/coffees/default-coffee.jpg";
+import { useContext } from "react";
+import { CartContext } from "../../shared/CartContext.jsx";
 const Menu = () => {
   const { coffees } = useCatalouge();
-  const { addToCart, removeFromCart } = useCartItems();
+  const { addToCart, removeFromCart } = useContext(CartContext);
 
   const handleIncrement = (item) => {
     addToCart(item.id);

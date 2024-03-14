@@ -1,9 +1,10 @@
+import { CartContext } from "../../shared/CartContext.jsx";
+import { useContext } from "react";
 import { IoCartOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import useCartItems from "../../api/hooks/useCartItems";
 
 const Cart = () => {
-  const { cartItems } = useCartItems();
+  const { cartItems } = useContext(CartContext);
   return (
     <Link
       to="/cart"

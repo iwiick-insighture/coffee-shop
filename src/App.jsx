@@ -12,7 +12,7 @@ import Order from "./pages/Order";
 import Dashboard from "./pages/Admin/Dashboard";
 import SignIn from "./pages/SignIn";
 import ProtectedRoute from "./shared/ProtectedRoute";
-import { CartProvider } from "@shared/CartContext";
+import { CartContextProvider } from "@shared/CartContext";
 import LogIn from "./pages/LogIn";
 
 const HeaderWrapper = () => {
@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <div className="app-container">
-        <CartProvider>
+        <CartContextProvider>
           <Router>
             <HeaderWrapper />
             <div className="main-content">
@@ -63,7 +63,7 @@ function App() {
               </Routes>
             </div>
           </Router>
-        </CartProvider>
+        </CartContextProvider>
       </div>
     </>
   );

@@ -13,6 +13,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import useOrders from "../../api/hooks/useOrders";
 import { z } from "zod";
+import { useContext } from "react";
+import { CartContext } from "../../shared/CartContext.jsx";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -23,6 +25,7 @@ const formSchema = z.object({
 const PaymentForm = ({ coffees, cartItems = [] }) => {
   const navigate = useNavigate();
   const { createOrder } = useOrders();
+  const { refreshCart } = useContext(CartContext);
 
   const getCoffee = (coffeeId) => {
     return coffees?.find((coffee) => coffee?.id == coffeeId);
@@ -54,6 +57,7 @@ const PaymentForm = ({ coffees, cartItems = [] }) => {
 
   async function onSubmit() {
     await createOrder();
+    await refreshCart();
     navigate("/orders");
   }
 

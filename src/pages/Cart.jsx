@@ -2,11 +2,12 @@ import CartTable from "@components/CartPage/CartTable";
 import Payment from "@components/CartPage/Payment";
 import PaymentForm from "@components/CartPage/PaymentForm";
 import useCatalouge from "../api/hooks/useCatalouge";
-import useCartItems from "../api/hooks/useCartItems";
+import { useContext } from "react";
+import { CartContext } from "../shared/CartContext.jsx";
 
 const Cart = () => {
   const { coffees } = useCatalouge();
-  const { cartItems, addToCart, removeFromCart } = useCartItems();
+  const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
 
   return (
     <section>
