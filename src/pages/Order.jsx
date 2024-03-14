@@ -36,7 +36,9 @@ const Order = () => {
                       <div key={item._id} className="flex items-center">
                         <p className="font-semibold">{item.quantity}x</p>
                         <div className="flex flex-col ml-2">
-                          <p>{getCoffee(item.coffeeId)?.name}</p>
+                          <p>
+                            {getCoffee(item.coffeeId)?.name || item.coffeeId}
+                          </p>
                         </div>
                       </div>
                     ))}

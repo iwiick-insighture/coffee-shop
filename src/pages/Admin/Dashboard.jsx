@@ -67,7 +67,7 @@ const Dashboard = () => {
       <div className="relative select-none">
         <div className="flex justify-between items-center">
           <h3 className="text-left font-bold text-2xl">Manage your coffee</h3>
-          <Dialog open={isDialogOpen}>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => setIsDialogOpen(true)}>Add Coffee</Button>
             </DialogTrigger>
