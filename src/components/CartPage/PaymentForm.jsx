@@ -32,10 +32,10 @@ const PaymentForm = ({ coffees, cartItems = [] }) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      number: "",
-      expdate: "",
-      cvv: "",
+      username: localStorage.getItem("currentUserName") || "",
+      number: localStorage.getItem("currentUserId") || "",
+      expdate: new Date().toISOString() || "",
+      cvv: localStorage.getItem("currentUserId").substring(5, 9) || "",
     },
   });
 
