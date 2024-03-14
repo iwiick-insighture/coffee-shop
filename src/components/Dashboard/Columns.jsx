@@ -34,6 +34,10 @@ export const getColumns = (removeCoffeeItem, updateCoffeeItem) => [
     header: "Number of Items",
   },
   {
+    accessorKey: "imageUrl",
+    header: "Image URL",
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const coffeeItem = row.original;
@@ -44,6 +48,7 @@ export const getColumns = (removeCoffeeItem, updateCoffeeItem) => [
           name: e.target.name.value,
           price: e.target.price.value,
           quantity: e.target.quantity.value,
+          imageUrl: e.target.imageUrl.value
         };
         updateCoffeeItem(coffeeItem.id, updatedItem);
       };
@@ -109,6 +114,16 @@ export const getColumns = (removeCoffeeItem, updateCoffeeItem) => [
                   <Input
                     id="quantity"
                     defaultValue={coffeeItem?.quantity}
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="imageUrl" className="text-right">
+                    Image URL
+                  </Label>
+                  <Input
+                    id="imageUrl"
+                    defaultValue={coffeeItem?.imageUrl}
                     className="col-span-3"
                   />
                 </div>

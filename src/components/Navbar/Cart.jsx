@@ -1,22 +1,9 @@
-import React from "react";
 import { IoCartOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import useCartItems from "../../api/hooks/useCartItems";
 
 const Cart = () => {
-  const [noOfItemsClicked, setNoOfItemsClicked] = React.useState(0);
-
-  React.useEffect(() => {
-    const updateNoOfItemsClicked = () => {
-      const clickCounts = JSON.parse(localStorage.getItem('clickCounts') || '{}');
-      const itemCount = Object.keys(clickCounts).length;
-      setNoOfItemsClicked(itemCount);
-    };
-
-    updateNoOfItemsClicked();
-    window.addEventListener('storage', updateNoOfItemsClicked);
-    return () => window.removeEventListener('storage', updateNoOfItemsClicked);
-  }, []);
-
+  const { cartItems } = useCartItems();
   return (
     <Link
       to="/cart"
@@ -24,7 +11,7 @@ const Cart = () => {
     >
       <IoCartOutline className="w-9 h-9" />
       <span className="absolute -top-2 -right-1 text-xs text-white w-6 h-6 flex items-center justify-center rounded-full bg-[#64ABFF]">
-        {noOfItemsClicked}
+        {cartItems.length || 0}
       </span>
     </Link>
   );

@@ -16,7 +16,6 @@ const Profile = () => {
 
   const handleLogOut = () => {
     localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("clickCounts");
     localStorage.removeItem("currentUserName");
     localStorage.removeItem("currentUserEmail");
     localStorage.removeItem("currentUserId");

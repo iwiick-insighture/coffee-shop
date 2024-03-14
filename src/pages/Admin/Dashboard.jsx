@@ -1,5 +1,4 @@
-import React from "react";
-import coffeeItemsData from "../../data/coffeeItems.json";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -26,37 +25,34 @@ import {
 } from "@components/ui/dialog";
 import { Label } from "@components/ui/label";
 import { Input } from "@components/ui/input";
+import useCatalouge from "../../api/hooks/useCatalouge";
 
 const Dashboard = () => {
-  const [coffeeItems, setCoffeeItems] = React.useState(
-    coffeeItemsData.coffeeItems
-  );
+  const { coffees, addNewCoffee, deleteCoffee, updateCoffee } = useCatalouge();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newItem, setNewItem] = React.useState({
     name: "",
     price: 0,
     quantity: 0,
+    imageUrl: undefined,
   });
-  const addCoffeeItem = () => {
-    setCoffeeItems([...coffeeItems, { ...newItem, id: Date.now() }]);
+  const addCoffeeItem = async () => {
+    await addNewCoffee({ ...newItem });
     setNewItem({ name: "", price: 0, quantity: 0 });
   };
 
-  const removeCoffeeItem = (id) => {
-    setCoffeeItems(coffeeItems.filter((item) => item.id !== id));
+  const removeCoffeeItem = async (id) => {
+    await deleteCoffee(id);
   };
 
-  const updateCoffeeItem = (id, updatedFields) => {
-    setCoffeeItems(
-      coffeeItems.map((item) =>
-        item.id === id ? { ...item, ...updatedFields } : item
-      )
-    );
+  const updateCoffeeItem = async (id, updatedFields) => {
+    await updateCoffee(id, updatedFields);
   };
 
   const columns = getColumns(removeCoffeeItem, updateCoffeeItem);
 
   const table = useReactTable({
-    data: coffeeItems,
+    data: coffees,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -71,9 +67,9 @@ const Dashboard = () => {
       <div className="relative select-none">
         <div className="flex justify-between items-center">
           <h3 className="text-left font-bold text-2xl">Manage your coffee</h3>
-          <Dialog>
+          <Dialog open={isDialogOpen}>
             <DialogTrigger asChild>
-              <Button>Add Coffee</Button>
+              <Button onClick={() => setIsDialogOpen(true)}>Add Coffee</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <form onSubmit={handleSubmit}>
@@ -133,9 +129,24 @@ const Dashboard = () => {
                       className="col-span-3"
                     />
                   </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      Image URL
+                    </Label>
+                    <Input
+                      id="imageUrl"
+                      onChange={(e) =>
+                        setNewItem({ ...newItem, imageUrl: e.target.value })
+                      }
+                      value={newItem.imageUrl}
+                      className="col-span-3"
+                    />
+                  </div>
                 </div>
                 <DialogFooter>
-                  <Button type="submit">Save changes</Button>
+                  <Button type="submit" onClick={() => setIsDialogOpen(false)}>
+                    Save
+                  </Button>
                 </DialogFooter>
               </form>
             </DialogContent>
