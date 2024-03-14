@@ -1,15 +1,7 @@
 import { Button } from "@components/ui/button";
-import useCartItems from "../../api/hooks/useCartItems";
-import useCatalouge from "../../api/hooks/useCatalouge";
 import defaultCoffeeIcon from "../../../public/coffees/default-coffee.jpg";
-// import { calculateTotalItems } from "@shared/CartUtils";
 
-const CartTable = () => {
-  // const { cartItems, addToCart, removeFromCart } = useCart();
-  const { coffees } = useCatalouge();
-  const { cartItems, addToCart, removeFromCart } = useCartItems();
-  // const totalItems = calculateTotalItems(cartItems);
-
+const CartTable = ({ coffees, cartItems, addToCart, removeFromCart }) => {
   const handleAddToCart = (item) => {
     addToCart(item.coffeeId);
   };
@@ -18,7 +10,7 @@ const CartTable = () => {
     removeFromCart(item.coffeeId);
   };
 
-  const getCoffeee = (item) => {
+  const getCoffee = (item) => {
     return coffees?.find((coffee) => coffee?.id == item?.coffeeId);
   };
 
@@ -38,13 +30,13 @@ const CartTable = () => {
           >
             <div className="flex flex-row">
               <img
-                src={getCoffeee(item)?.imageUrl || defaultCoffeeIcon}
+                src={getCoffee(item)?.imageUrl || defaultCoffeeIcon}
                 alt="coffee"
                 style={{ height: "70px", width: "60px" }}
                 className="rounded-md object-cover"
               />
               <div className="flex flex-col items-start justify-center px-8 gap-1">
-                <p className="font-medium text-lg">{getCoffeee(item)?.name}</p>
+                <p className="font-medium text-lg">{getCoffee(item)?.name}</p>
                 <div className="flex flex-row items-center gap-3">
                   <p>Quantity</p>
                   <Button
@@ -64,7 +56,7 @@ const CartTable = () => {
               </div>
             </div>
             <p className="text-xl font-semibold">
-              ${Number(getCoffeee(item)?.price).toFixed(2)}
+              ${Number(getCoffee(item)?.price).toFixed(2)}
             </p>
           </div>
         ))}

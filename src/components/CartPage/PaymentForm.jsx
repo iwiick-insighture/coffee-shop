@@ -19,8 +19,14 @@ const formSchema = z.object({
   }),
 });
 
-const PaymentForm = () => {
+const PaymentForm = ({ coffees, cartItems = [] }) => {
+  console.log(cartItems);
   const navigate = useNavigate();
+
+  const getCoffee = (coffeeId) => {
+    return coffees?.find((coffee) => coffee?.id == coffeeId);
+  };
+
   // 1. Define your form.
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -32,9 +38,22 @@ const PaymentForm = () => {
     },
   });
 
+  const getTotalPrice = () => {
+    let total = 0;
+    cartItems.forEach((item) => {
+      total += item.quantity * getCoffee(item.coffeeId)?.price;
+    });
+
+    return total;
+  };
+
+  const getTotalDiscount = () => {
+    return (getTotalPrice() * 0.1).toFixed(2);
+  };
+
   function onSubmit(values) {
     console.log(values);
-    navigate('/order-information');
+    navigate("/order-information");
   }
 
   return (
@@ -107,21 +126,19 @@ const PaymentForm = () => {
 
             <div className="p-5 bg-[#E2E4EB36] rounded-lg">
               <div className="flex flex-row justify-between my-3">
-                <p>Subtotal</p>
-                <p>1000.00</p>
+                <p>Total</p>
+                <p>${getTotalPrice()}</p>
               </div>
               <div className="flex flex-row justify-between my-3">
                 <p>Discount</p>
-                <p>-100.00</p>
+                <p>${getTotalDiscount()}</p>
               </div>
               <div className="flex flex-row justify-between my-3 border-y-2 border-[#E2E4EB] py-3">
                 <p className="font-medium">Subtotal</p>
-                <p>900.00</p>
+                <p>{(getTotalPrice()-getTotalDiscount()).toFixed(2)}</p>
               </div>
             </div>
-            <Button className="w-full bg-[#0683DE] text-white">
-              Submit
-            </Button>
+            <Button className="w-full bg-[#0683DE] text-white">Submit</Button>
           </form>
         </Form>
       </div>
