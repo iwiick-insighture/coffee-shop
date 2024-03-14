@@ -20,24 +20,17 @@ import { Input } from "@components/ui/input";
 import { Label } from "@components/ui/label";
 import { MoreHorizontal } from "lucide-react";
 
-export const getColumns = (
-  removeCoffeeItem,
-  updateCoffeeItem
-) => [
+export const getColumns = (removeCoffeeItem, updateCoffeeItem) => [
   {
     accessorKey: "name",
     header: "Item Name",
-  },
-  {
-    accessorKey: "description",
-    header: "Description",
   },
   {
     accessorKey: "price",
     header: "Price ($)",
   },
   {
-    accessorKey: "numberOfItems",
+    accessorKey: "quantity",
     header: "Number of Items",
   },
   {
@@ -49,9 +42,8 @@ export const getColumns = (
         e.preventDefault();
         const updatedItem = {
           name: e.target.name.value,
-          description: e.target.description.value,
           price: e.target.price.value,
-          numberOfItems: e.target.numberOfItems.value,
+          quantity: e.target.quantity.value,
         };
         updateCoffeeItem(coffeeItem.id, updatedItem);
       };
@@ -102,16 +94,6 @@ export const getColumns = (
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="username" className="text-right">
-                    Description
-                  </Label>
-                  <Input
-                    id="description"
-                    defaultValue={coffeeItem?.description}
-                    className="col-span-3"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="username" className="text-right">
                     Price
                   </Label>
                   <Input
@@ -125,8 +107,8 @@ export const getColumns = (
                     Stock
                   </Label>
                   <Input
-                    id="numberOfItems"
-                    defaultValue={coffeeItem?.numberOfItems}
+                    id="quantity"
+                    defaultValue={coffeeItem?.quantity}
                     className="col-span-3"
                   />
                 </div>

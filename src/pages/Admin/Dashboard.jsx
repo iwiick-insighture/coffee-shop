@@ -33,13 +33,12 @@ const Dashboard = () => {
   );
   const [newItem, setNewItem] = React.useState({
     name: "",
-    description: "",
     price: 0,
-    numberOfItems: 0,
+    quantity: 0,
   });
   const addCoffeeItem = () => {
     setCoffeeItems([...coffeeItems, { ...newItem, id: Date.now() }]);
-    setNewItem({ name: "", description: "", price: 0, numberOfItems: 0 });
+    setNewItem({ name: "", price: 0, quantity: 0 });
   };
 
   const removeCoffeeItem = (id) => {
@@ -102,20 +101,6 @@ const Dashboard = () => {
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="username" className="text-right">
-                      Description
-                    </Label>
-                    <Input
-                      id="description"
-                      placeholder="description"
-                      onChange={(e) =>
-                        setNewItem({ ...newItem, description: e.target.value })
-                      }
-                      value={newItem.description}
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
                       Price
                     </Label>
                     <Input
@@ -136,15 +121,15 @@ const Dashboard = () => {
                       Stock
                     </Label>
                     <Input
-                      id="numberOfItems"
+                      id="quantity"
                       placeholder="10"
                       onChange={(e) =>
                         setNewItem({
                           ...newItem,
-                          numberOfItems: parseInt(e.target.value, 10) || 0,
+                          quantity: parseInt(e.target.value, 10) || 0,
                         })
                       }
-                      value={newItem.numberOfItems}
+                      value={newItem.quantity}
                       className="col-span-3"
                     />
                   </div>

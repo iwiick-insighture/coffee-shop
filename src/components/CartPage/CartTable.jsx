@@ -6,7 +6,7 @@ import { calculateTotalItems } from "@shared/CartUtils";
 const CartTable = () => {
   const { data: coffeeItems, isLoading, error } = getCoffee();
   const { cartItems, addToCart, removeFromCart } = useCart();
-  // const totalItems = calculateTotalItems(cartItems);
+  const totalItems = calculateTotalItems(cartItems);
   const loadClickCounts = () =>
     JSON.parse(localStorage.getItem("clickCounts")) || {};
 
@@ -42,7 +42,11 @@ const CartTable = () => {
 
   return (
     <div>
-      <div className={`pb-10 px-5 rounded-lg ${cartItems.length > 4 && 'overflow-y-scroll'} h-[420px]`}>
+      <div
+        className={`pb-10 px-5 rounded-lg ${
+          cartItems.length > 4 && "overflow-y-scroll"
+        } h-[420px]`}
+      >
         {cartItems.map((item) => (
           <div
             className={`flex sm:flex-row flex-col items-start justify-between sm:p-5 py-5 ${

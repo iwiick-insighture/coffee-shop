@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import coffeeItemsData from "../../data/coffeeItems.json";
 
 const getCoffee = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   return useQuery({
     queryKey: ['coffeeItems'],
     queryFn: async () => {
