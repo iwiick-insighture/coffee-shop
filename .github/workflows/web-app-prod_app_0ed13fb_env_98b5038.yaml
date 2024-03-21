@@ -7,7 +7,7 @@ name: web-app-prod_app_0ed13fb_env_98b5038 Pipeline (Skyu Generated)
   repository_dispatch:
     types: pipeline_78311e67-147a-4311-9178-83711c59cc03
 env:
-  ENCODED_PIPELINE_SECRET: ${{secrets.COFFEESHOP_WEBAPPPROD_APP_0ED13FB_ENV_98B5038}}
+  ENCODED_PIPELINE_SECRET: ${{secrets.COFFEESHOP_WEBAPPPROD_APP_0ED13FB_ENV_98B5038_YAML}}
   COMMIT_ID: ${{github.event.client_payload.commitId || github.sha}}
   S3_SYNC_URL: >-
     s3://skyu-project-bb03dddc-a0e9-4622-96c0-b1207323c29f-webapps/prod/coffee-shop
@@ -20,62 +20,12 @@ env:
   APP_BUILD_COMMAND: npm run build
   DEPLOY_STEP_SHOULD_DEPLOY: 'false'
 jobs:
-  code-scan:
-    name: Code Scan
-    permissions: write-all
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Run :: Decoding Secrets 11f39749-5ca0-4390-ae60-a91a49d5988d'
-        run: |2-
-
-                  if [ ! -x "$(command -v jq)" ]; then
-                    echo "jq not found, installing..."
-                    sudo apt-get update
-                    sudo apt-get install -y jq
-                  fi
-                  echo "${{ env.ENCODED_PIPELINE_SECRET }}" | base64 --decode | jq -r 'to_entries[] | "\(.key)=\(.value)"' | while read line; do echo "$line" >> $GITHUB_ENV; echo "::add-mask::${line#*=}"; done
-                
-      - name: 'Run :: Checkout repository for Code Scan'
-        uses: actions/checkout@v4
-      - name: 'Run :: Decoding Secrets 35a8a401-ffaa-45d0-9697-f29329d41735'
-        run: |2-
-
-                  if [ ! -x "$(command -v jq)" ]; then
-                    echo "jq not found, installing..."
-                    sudo apt-get update
-                    sudo apt-get install -y jq
-                  fi
-                  echo "${{ env.ENCODED_PIPELINE_SECRET }}" | base64 --decode | jq -r 'to_entries[] | "\(.key)=\(.value)"' | while read line; do echo "$line" >> $GITHUB_ENV; echo "::add-mask::${line#*=}"; done
-                
-      - name: 'Run :: Install Semgrep, Scan and Print'
-        run: >-
-          docker run -i -v "${PWD}:/src" semgrep/semgrep semgrep /src --json
-          --quiet > semgrep_results.json
-      - name: 'Run :: Upload Code Scan Report'
-        run: |2-
-
-                  SARIF_FILE="semgrep_results.json"
-                  if [ -n "$SARIF_FILE" ]; then
-                    cat "$SARIF_FILE" > ${{ env.COMMIT_ID }}-code-scan-report.sarif
-                    echo "Uploading CodeQL Results to S3 :: ${{ env.COMMIT_ID }}-code-scan-report.sarif"
-           
-                    response=$(curl -X POST -F 'file=@${{ env.COMMIT_ID }}-code-scan-report.sarif' -F 'provider=aws' -F 'resourceType=code-scan-report' -F 'cloudStoragePath=/${{ env.PIPELINE_APPLICATION_ID }}/code-scan-reports/'  -H 'Authorization: ${{ env.SERVICE_ACC_ACCESS_TOKEN }}' -H 'x-auth-by: sa' -H 'x-organization-id: ${{ env.PIPELINE_ORGANIZATION_ID }}' -H 'x-project-id: ${{ env.PIPELINE_PROJECT_ID }}' -H 'x-trace-id: ${{ env.PIPELINE_TRACE_ID }}' -H 'x-resource-id: ${{ env.PIPELINE_APPLICATION_ID }}' -H 'Content-Type: multipart/form-data'  '${{ env.S3_UPLOAD_ENDPOINT }}')
-
-                    if echo "$response" | grep -q '"success":true'; then
-                      echo "SUCCESS :: $response"
-                    else
-                      echo "FAILED :: $response"
-                    fi
-
-                  else
-                      echo "SARIF file not found."
-                  fi
   _status-pending:
     name: _status Pending
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: 'Run :: Decoding Secrets 0daa88d7-c2cd-425d-bd72-9eb15a735ac5'
+      - name: 'Run :: Decoding Secrets a65165'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -102,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.client_payload.releaseData }}
     steps:
-      - name: 'Run :: Decoding Secrets 6eccbf4a-b039-4d02-82af-f5d8a214c475'
+      - name: 'Run :: Decoding Secrets 35159c'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -166,7 +116,7 @@ jobs:
 
               git fetch --all
               git checkout ${{ github.event.client_payload.commitId }}
-      - name: 'Run :: Decoding Secrets 4748e9e9-f012-445b-8dad-0a86735c2a98'
+      - name: 'Run :: Decoding Secrets 979a59'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -176,7 +126,7 @@ jobs:
                   fi
                   echo "${{ env.ENCODED_PIPELINE_SECRET }}" | base64 --decode | jq -r 'to_entries[] | "\(.key)=\(.value)"' | while read line; do echo "$line" >> $GITHUB_ENV; echo "::add-mask::${line#*=}"; done
                 
-      - name: 'Run :: Configure AWS credentials 65e714e8-6a38-4c71-a947-c46b7b367c94'
+      - name: 'Run :: Configure AWS credentials e1921ee0-714f-4724-ba2b-1ae14bcc678b'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.roleARN }}
@@ -208,7 +158,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ !(failure() || cancelled()) }}
     steps:
-      - name: 'Run :: Decoding Secrets 1ccb1df2-f333-4644-afe4-6fd43a30596c'
+      - name: 'Run :: Decoding Secrets bf7aa6'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -231,7 +181,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ failure() || cancelled() }}
     steps:
-      - name: 'Run :: Decoding Secrets a9809269-9f05-40cb-ad49-d0332dc66d3b'
+      - name: 'Run :: Decoding Secrets 16576f'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -254,7 +204,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ github.event.client_payload.releaseData == null }}
     steps:
-      - name: 'Run :: Decoding Secrets 4c319471-162e-4513-bf98-37d66094cef8'
+      - name: 'Run :: Decoding Secrets 03d514'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
